@@ -12,18 +12,25 @@
 namespace Lucid\Resource;
 
 /**
- * @interface ResourceCollectionInterface
+ * @interface CollectionInterface
  *
  * @package Lucid\Resource
  * @version $Id$
  * @author iwyg <mail@thomas-appel.com>
  */
-interface ResourceCollectionInterface
+interface CollectionInterface
 {
+    /**
+     * Adds a resource.
+     *
+     * @param ResourceInterface $resource
+     *
+     * @return void
+     */
     public function addResource(ResourceInterface $resource);
 
     /**
-     * Add a file resource.
+     * Adds a file resource.
      *
      * @param string $file
      *
@@ -32,7 +39,7 @@ interface ResourceCollectionInterface
     public function addFileResource($file);
 
     /**
-     * Add a object resource.
+     * Adds a object resource.
      *
      * @param object $object
      *
@@ -41,18 +48,18 @@ interface ResourceCollectionInterface
     public function addObjectResource($object);
 
     /**
-     * Get all resources as array
+     * Gets all resources as array.
      *
      * @return ResourceInterface[]
      */
     public function all();
 
     /**
-     * isValid
+     * Checks if all resources are still valid.
      *
      * @param int $timestamp
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid($timestamp);
 }

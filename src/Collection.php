@@ -12,20 +12,16 @@
 namespace Lucid\Resource;
 
 /**
- * @class ResourceCollector
+ * @class Collection
  *
  * @package Lucid\Resource
  * @version $Id$
  * @author iwyg <mail@thomas-appel.com>
  */
-class ResourceCollection implements ResourceCollectionInterface
+class Collection implements CollectionInterface
 {
-    /**
-     * resources
-     *
-     * @var ResourceInterface[]
-     */
-    protected $resources;
+    /** @var ResourceInterface[] */
+    private $resources;
 
     /**
      * Constructor.
@@ -92,7 +88,7 @@ class ResourceCollection implements ResourceCollectionInterface
     public function isValid($timestamp)
     {
         foreach ($this->resources as $resource) {
-            if (!$resource->isValid()) {
+            if (!$resource->isValid($timestamp)) {
                 return false;
             }
         }

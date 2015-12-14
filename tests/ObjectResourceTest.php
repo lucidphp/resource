@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This File is part of the Lucid\Resource package
  *
  * (c) iwyg <mail@thomas-appel.com>
@@ -11,68 +11,60 @@
 
 namespace Lucid\Resource\Tests;
 
-use Lucid\Resource\FileResource;
+use Lucid\Resource\ObjectResource;
 
 /**
- * @class FileResourceTest
+ * @class ObjectResourceTest
  *
  * @package Lucid\Resource
  * @version $Id$
  * @author iwyg <mail@thomas-appel.com>
  */
-class FileResourceTest extends \PHPUnit_Framework_TestCase
+class ObjectResourceTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
     public function itShouldBeInstantiable()
     {
-        $this->assertInstanceof('Lucid\Resource\ResourceInterface', new FileResource(''));
+        $this->assertInstanceOf('Lucid\Resource\ResourceInterface', new ObjectResource($this));
     }
 
     /** @test */
-    public function itShouldReturnResourcePathAsString()
+    public function itShouldGetObjectFilePath()
     {
-        $resource = new FileResource(__FILE__);
+        $resource = new ObjectResource($this);
 
         $this->assertSame(__FILE__, $resource->getResource());
     }
 
     /** @test */
-    public function itShouldBeLocalAResource()
+    public function itShouldBeLocal()
     {
-        $resource = new FileResource(__FILE__);
+        $resource = new ObjectResource($this);
 
         $this->assertTrue($resource->isLocal());
-    }
 
-    /** @test */
-    public function itShouldNotBeLocalAResource()
-    {
-        $resource = new FileResource('https://example.com/files/resource.txt');
-
+        $resource = new ObjectResource($obj =  $this->getMock('ObjResourceMock'));
         $this->assertFalse($resource->isLocal());
     }
 
     /** @test */
-    public function itShouldBeAValidResource()
+    public function itShouldBeValid()
     {
-        $resource = new FileResource(__FILE__);
-
+        $resource = new ObjectResource($this);
         $this->assertTrue($resource->isValid(time()));
     }
 
     /** @test */
-    public function itShouldNotBeAValidResource()
+    public function itShouldBeInvalid()
     {
-        $resource = new FileResource(__FILE__);
-        $time = filemtime(__FILE__) - 1;
-
-        $this->assertFalse($resource->isValid($time));
+        $resource = new ObjectResource($this);
+        $this->assertFalse($resource->isValid(filemtime(__FILE__) - 1));
     }
 
     /** @test */
     public function itShouldBeSerializable()
     {
-        $resource = new FileResource(__FILE__);
+        $resource = new ObjectResource($obj = $this);
 
         $data = serialize($resource);
         $ret = unserialize($data);
